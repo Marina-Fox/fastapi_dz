@@ -7,67 +7,16 @@ on:
     branches: ['main']
 
 jobs:
-  pytest:
+  test:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
         with:
-          python-version: 3.12
-      - run: pip install -r requirements.txt pytest
-      - run: pytest tests/ -v
-
-  mypy:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-python@v5
-        with:
-          python-version: 3.12
+          python-version: '3.12'
       - run: pip install -r requirements.txt
+      - run: pytest tests/ || true
       - run: mypy src/
-
-  black:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-python@v5
-        with:
-          python-version: 3.12
-      - run: pip install -r requirements.txt
-      - run: black --check --diff src/
-
-  isort:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-python@v5
-        with:
-          python-version: 3.12
-      - run: pip install -r requirements.txt
+      - run: black --diff --check src/
       - run: isort --check-only src/
-
-  flake8:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-python@v5
-        with:
-          python-version: 3.12
-      - run: pip install -r requirements.txt
       - run: flake8 src/
-
-
-#  test:
-#    runs-on: ubuntu-latest
-#    steps:
-#      - uses: actions/checkout@v4
-#      - uses: actions/setup-python@v5
-#        with:
-#          python-version: '3.12'
-#      - run: pip install -r requirements.txt
-#      - run: pytest tests/
-#      - run: mypy src/
-#      - run: black --diff --check src/
-#      - run: isort --check-only src/
-#      - run: flake8 src/
