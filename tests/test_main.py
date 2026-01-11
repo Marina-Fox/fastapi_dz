@@ -3,9 +3,9 @@ from httpx import AsyncClient, ASGITransport
 from sqlalchemy.ext.asyncio import create_async_engine, async_sessionmaker, AsyncSession
 from typing import AsyncGenerator, Any
 
-from homework.hw1.app.src.database import get_session
-from homework.hw1.app.src.main import app
-from homework.hw1.app.src.models import Base
+from ..src.database import get_session
+from ..src.main import app
+from ..src.models import Base
 
 T_DATABASE_URL = 'sqlite+aiosqlite:///:memory:'
 
