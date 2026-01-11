@@ -17,45 +17,45 @@ jobs:
       - run: pip install -r requirements.txt pytest
       - run: pytest tests/ -v
 
-    mypy:
-      runs-on: ubuntu-latest
-      steps:
-        - uses: actions/checkout@v4
-        - uses: actions/setup-python@v5
-          with:
-            python-version: 3.12
-        - run: pip install -r requirements.txt
-        - run: mypy src/
+  mypy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: 3.12
+      - run: pip install -r requirements.txt
+      - run: mypy src/
 
-    black:
-      runs-on: ubuntu-latest
-      steps:
-        - uses: actions/checkout@v4
-        - uses: actions/setup-python@v5
-          with:
-            python-version: 3.12
-        - run: pip install -r requirements.txt
-        - run: black --check --diff src/
+  black:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: 3.12
+      - run: pip install -r requirements.txt
+      - run: black --check --diff src/
 
-    isort:
-      runs-on: ubuntu-latest
-      steps:
-        - uses: actions/checkout@v4
-        - uses: actions/setup-python@v5
-          with:
-            python-version: 3.12
-        - run: pip install -r requirements.txt
-        - run: isort --check-only src/
+  isort:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: 3.12
+      - run: pip install -r requirements.txt
+      - run: isort --check-only src/
 
-    flake8:
-      runs-on: ubuntu-latest
-      steps:
-        - uses: actions/checkout@v4
-        - uses: actions/setup-python@v5
-          with:
-            python-version: 3.12
-        - run: pip install -r requirements.txt
-        - run: flake8 src/
+  flake8:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: 3.12
+      - run: pip install -r requirements.txt
+      - run: flake8 src/
 
 
 #  test:
