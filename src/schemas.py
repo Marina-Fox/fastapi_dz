@@ -8,7 +8,8 @@ class BaseRecipe(BaseModel):
     description: str = Field(..., title="Рецепт")
 
 
-class RecipeIn(BaseRecipe): ...
+class RecipeIn(BaseRecipe):
+    ...
 
 
 class RecipeOut(BaseRecipe):
