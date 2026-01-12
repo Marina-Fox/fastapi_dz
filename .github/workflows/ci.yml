@@ -45,7 +45,7 @@ jobs:
         with:
           python-version: 3.12
       - run: pip install -r requirements.txt
-      - run: isort --check-only src/
+      - run: isort --check-only --diff --profile black src/
 
   flake8:
     runs-on: ubuntu-latest
