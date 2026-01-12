@@ -6,7 +6,7 @@ from sqlalchemy.ext.asyncio import AsyncSession, async_sessionmaker, create_asyn
 
 from ..src.database import get_session
 from ..src.main import app
-from ..src.models import Base
+from ..src.models import Base, Recipe
 
 T_DATABASE_URL = "sqlite+aiosqlite:///:memory:"
 
@@ -21,11 +21,11 @@ async def engine_test():
 
 
 @pytest_asyncio.fixture(scope="function")
-async def get_test_session(engine_test):
-    test_session = async_sessionmaker(engine_test, expire_on_commit=False)
+async def test_session(engine_test):
+    _session = async_sessionmaker(engine_test, expire_on_commit=False)
 
     async def override_get_session() -> AsyncGenerator[AsyncSession, Any]:
-        async with test_session() as session:
+        async with _session() as session:
             try:
                 yield session
                 await session.rollback()
@@ -38,6 +38,22 @@ async def get_test_session(engine_test):
 
 
 @pytest_asyncio.fixture(scope="function")
-async def client(get_test_session):
+async def client(test_session):
     async with AsyncClient(transport=ASGITransport(app), base_url="http://test") as ac:
         yield ac
+
+
+@pytest_asyncio.fixture(scope="function")
+async def test_recipe(engine_test):
+    session_maker = async_sessionmaker(engine_test, expire_on_commit=False)
+    async with session_maker() as session:
+        recipe = Recipe(
+            title="Суши",
+            cooking_time=60,
+            ingredients="рис, рыба, водоросли",
+            description="свернуть в трубочку",
+        )
+        session.add(recipe)
+        await session.commit()
+        yield recipe.id
+        await session.rollback()
