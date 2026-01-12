@@ -9,7 +9,7 @@ class BaseRecipe(BaseModel):
 
 
 class RecipeIn(BaseRecipe):
-    ...
+    pass
 
 
 class RecipeOut(BaseRecipe):
